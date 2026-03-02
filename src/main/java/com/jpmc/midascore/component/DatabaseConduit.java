@@ -7,13 +7,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class DatabaseConduit {
     private final UserRepository userRepository;
+    private final com.jpmc.midascore.repository.TransactionRepository transactionRepository;
 
-    public DatabaseConduit(UserRepository userRepository) {
+    public DatabaseConduit(UserRepository userRepository,
+            com.jpmc.midascore.repository.TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public void save(UserRecord userRecord) {
         userRepository.save(userRecord);
+    }
+
+    public UserRecord findById(long id) {
+        return userRepository.findById(id);
+    }
+
+    public void saveTransaction(com.jpmc.midascore.entity.TransactionRecord transactionRecord) {
+        transactionRepository.save(transactionRecord);
     }
 
 }
